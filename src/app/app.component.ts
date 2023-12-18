@@ -3,15 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { ZoomMtg } from '@zoomus/websdk';
-
-ZoomMtg.setZoomJSLib('https://source.zoom.us/2.16.0/lib', '/av');
+import { ZoomMtg } from '@zoom/meetingsdk';
 
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareWebSDK();
-// loads language files, also passes any error messages to the ui
-ZoomMtg.i18n.load('en-US');
-ZoomMtg.i18n.reload('en-US');
 
 @Component({
   selector: 'app-root',
@@ -69,6 +64,7 @@ export class AppComponent implements OnInit {
 
     ZoomMtg.init({
       leaveUrl: this.leaveUrl,
+      patchJsMedia: true,
       success: (success) => {
         console.log(success)
         ZoomMtg.join({
